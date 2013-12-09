@@ -18,12 +18,15 @@ public class SpamBootImplementation implements SpamBoot{
 	@Override
 	public String getSeed() {
 		// call next url from datastore
+		int i = 0;
 		Set<String> s = weblink.getUrls();
 		for (Iterator<String> itr= s.iterator();itr.hasNext();itr.next()){
 			//String next = itr.next();
 			//System.out.println(itr.next());
 			try{
 				String newUrl = itr.next();
+				Crawler spider = new Crawler(newUrl, weblink);
+				i++;
 				//this.setSeed(itr.next());	
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -71,15 +74,20 @@ public class SpamBootImplementation implements SpamBoot{
 }
 
 class Crawler implements Runnable{
+	private String seed;
 	private Set<String> urlSet;
 	private Set<String> urlVisited;
 	private Set<String> emailSet;
 	
-	public Crawler(Set<String> urlSet){
-		this.urlSet = urlSet;
+	public Crawler(String url2scan, WebpageLinks weblink){
+		this.seed = url2scan;
+		this.urlSet = weblink.getUrls();
+		this.emailSet = weblink.getUrls();
 	}
 	
 	public void run(){
-			
+		Webpage reader = new WebpageReader(this.seed);
+		
+		System.out.println();	
 	}
 }
